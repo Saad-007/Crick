@@ -1,0 +1,36 @@
+body{
+  text-align: center;
+}
+.choiceButton{
+  height: 100px;
+  width: 100px;
+  margin: 12px;
+  border: none;
+  border-radius: 50px;
+  background-color: rgb(197, 247, 222);
+  cursor: pointer;
+}
+.choiceButton1{
+  height: 100px;
+  width: 100px;
+  border: none;
+  border-radius: 50px;
+  background-color: white;
+  cursor: pointer;
+}
+.choiceButton1{
+  height: 100px;
+  width: 100px;
+  border: none;
+  border-radius: 50px;
+  background-color: white;
+  cursor: pointer;
+}
+.choiceimg{
+  height: 73px;
+}
+.score-img{
+  height: 70px;
+  cursor: pointer;
+}
+

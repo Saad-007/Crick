@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Cricket Game</title>
+  <link rel="stylesheet" href="cricket.css">
+</head>
+
+<body>
+  <h1>Bat Ball Stump Game</h1>
+  <button class="choiceButton" onclick="
+  let Computerchoice = ComputerValuegenerator();
+  let result=getResult('Bat',Computerchoice);
+  showResult('Bat',Computerchoice,result);
+">
+    <img src="img/bat.png" alt="Bat" class="choiceimg"></button>
+
+  <button class="choiceButton" onclick="
+  Computerchoice = ComputerValuegenerator();
+  result=getResult('Ball',Computerchoice);
+  showResult('Ball',Computerchoice,result);
+">
+    <img src="img/ball.png" alt="Ball" class="choiceimg"></button>
+
+  <button class="choiceButton" onclick="
+  Computerchoice = ComputerValuegenerator();
+  result=getResult('Stump',Computerchoice);
+  showResult('Stump',Computerchoice,result);
+">
+    <img src="img/stump.png" alt="Stump" class="choiceimg"></button>
+
+  <h3 id="user-move"></h3>
+  <h3 id="computer-move"></h3>
+  <h3 id="result"></h3>
+  <h3 id="score"></h3>
+  <button class="choiceButton1" onclick="localStorage.clear()
+  resetscore();
+  "><img src="img/icons8-reset-50.png" alt="" class="choiceimg"></button>
+  <h3 id="score">
+    <span id="score-won"><img src="img/won.png" alt="Won" class="score-img"></span>
+    <span id="score-lost"><img src="img/lost.png" alt="Lost" class="score-img"></span>
+    <span id="score-tie"><img src="img/tie.png" alt="Tie" class="score-img"></span>
+  </h3>
+
+  <script>
+
+    let scorestr = localStorage.getItem('Score');
+    let score;
+    resetscore(scorestr);
+    function resetscore(scorestr) {
+      score = scorestr ? JSON.parse(scorestr) : {
+        Win: '0',
+        Lost: '0',
+        Tie: '0',
+
+      };
+      score.displayscore = function () {
+        return `Score:Won:${score.Win} , Lost:${score.Lost}, Tie:${score.Tie}`;
+      };
+
+      showResult();
+    }
+
+
+
+
+    function ComputerValuegenerator() {
+      let randomNumber = Math.random() * 3;
+      if (randomNumber <= 1) {
+        return 'Bat';
+      }
+      else if (randomNumber <= 2) {
+        return 'Ball';
+      }
+      else {
+        return 'Stump';
+      }
+    }
+
+    function getResult(userMove, Computermove) {
+      if (userMove === 'Bat') {
+        if (Computermove === 'Ball') {
+          score.Win++;
+          return 'User has Won';
+        } else if (Computermove === 'Bat') {
+          score.Tie++;
+          return `It's a Tie`;
+        } else {
+          score.Lost++;
+          return 'Computer has Won';
+
+        }
+      }
+      else if (userMove === 'Ball') {
+        if (Computermove === 'Ball') {
+          score.Tie++;
+          return `It's a Tie`;
+        }
+        else if (Computermove === 'Bat') {
+          score.Lost++;
+          return 'Computer has Won';
+        }
+        else if (Computermove === 'Stump') {
+          score.Win++;
+          return 'User has Won';
+        }
+      }
+      else {
+        if (Computermove === 'Ball') {
+          score.Lost++;
+          return 'Computer has won';
+        } else if (Computermove === 'Bat') {
+          score.Win++;
+          return 'User won.';
+        } else if (Computermove === 'Stump') {
+          score.Tie++;
+          return `It's a tie`;
+        }
+      }
+    }
+    function showResult(userMove, Computermove, result) {
+      localStorage.setItem('Score', JSON.stringify(score));
+      document.querySelector('#user-move').innerText = userMove ? `You have chosen ${userMove}` : '';
+      document.querySelector('#computer-move').innerText = Computermove ? `Computer choice is ${Computermove}` : '';
+      document.querySelector('#result').innerText = result || '';
+
+      // Update score display with images
+      document.querySelector('#score-won').innerHTML = `<img src="img/won.png" alt="Won" class="score-img"> ${score.Win}`;
+      document.querySelector('#score-lost').innerHTML = `<img src="img/lost.png" alt="Lost" class="score-img"> ${score.Lost}`;
+      document.querySelector('#score-tie').innerHTML = `<img src="img/tie.png" alt="Tie" class="score-img"> ${score.Tie}`;
+    }
+
+  </script>
+</body>
+
+</html>
